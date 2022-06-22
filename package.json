@@ -1,0 +1,17 @@
+{
+  "name": "vi-coding-assignment",
+  "version": "1.0.0",
+  "description": "Vi Backend Coding Assignment",
+  "main": "src/index.js",
+  "author": "Alon Kaduri <alonk@vi.co>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^28.1.0"
+  },
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}

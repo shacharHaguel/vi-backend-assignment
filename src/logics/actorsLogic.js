@@ -34,11 +34,45 @@ const getMovieCast = (movieId) => {
 };
 
 const getActorsWithMultipleCharacters = async () => {
-  const result = await allMovies();
-  console.log(result);
-  return result;
+  const result = await getActorsAndCharvterPerMovie();
+
+  return result
+    .filter((actor) => actor.movies.length > 1)
+    .map((actor) => ({
+      [actor.name]: [
+        ...actor.movies.map((movie) => ({ [movie.name]: movie.character })),
+      ],
+    }));
 };
 
-const getMoviesPerActor = () => {};
+const getMoviesPerActor = async () => {
+  const result = await getActorsAndCharvterPerMovie();
+
+  return result.map((actor) => ({
+    [actor.name]: [...actor.movies.map((movie) => movie.name)],
+  }));
+};
+
+const getActorsAndCharvterPerMovie = async () => {
+  const allMoviesCast = await allMovies();
+  const result = actors.map((actor) => ({ name: actor, movies: [] }));
+
+  allMoviesCast.forEach((movie) => {
+    const movieCast = movie.cast;
+    movieCast.forEach((actor) => {
+      const actorRes = result.find(
+        (currActor) => currActor.name === actor.name
+      );
+      if (actorRes !== undefined) {
+        actorRes.movies = [
+          ...actorRes.movies,
+          { name: movie.name, character: actor.character },
+        ];
+      }
+    });
+  });
+
+  return result;
+};
 
 module.exports = { getActorsWithMultipleCharacters, getMoviesPerActor };

@@ -1,5 +1,6 @@
 const router = require("express").Router();
 
-router.use("/", require("./actors"));
+router.use("/", require("./actorsApi"));
+router.use("/", require("./moviesApi"));
 
 module.exports = router;
